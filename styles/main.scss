@@ -1,0 +1,25 @@
+$primary-color: #4db6ac;
+$secondary-color: #00857c;
+$nav-button-color: #80e8dd;
+
+body {
+	background-color: $primary-color;
+}
+
+.navbar {
+	background-color: $secondary-color;
+	color: rgba(255,255,255,0.9);
+	.btn-secondary {
+		background-color: $nav-button-color;
+		color: #000;
+		border: none;
+	}
+}
+.btn-primary {
+	background-color: $secondary-color;
+	border: none;
+	&:hover {
+		background-color: $secondary-color;
+		border: none;
+	}
+}
