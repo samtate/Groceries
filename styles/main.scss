@@ -5,7 +5,6 @@ $nav-button-color: #80e8dd;
 body {
 	background-color: $primary-color;
 }
-
 .navbar {
 	background-color: $secondary-color;
 	color: rgba(255,255,255,0.9);
@@ -21,5 +20,86 @@ body {
 	&:hover {
 		background-color: $secondary-color;
 		border: none;
+	}
+}
+.list-group {
+	padding-right: 0;
+}
+.list-group-item {
+	&.disabled {
+		color: #e2e2e2;
+	}
+	input {
+		margin: 10px 0;
+	}
+	label {
+		max-width: 90%;
+		margin: 5px 0 0 30px;
+		overflow-wrap: break-word;
+	}
+	.delete-button {
+		float: right;
+		border-radius: 20px;
+	}
+}
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}
+.divider {
+	display: none;
+}
+.remove-ticked {
+	float: right;
+}
+hr {
+	margin-top: 20px;
+}
+.no-items {
+	width: 300px;
+	height: 300px;
+	left: 50%;
+	margin: 0px 0 0 -150px;
+	position: relative;
+	p {
+		text-align: center;
+		font-size: 48px;
+		color: #00857c;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: #008077;
+	}
+}
+footer {
+	height: 250px;
+	margin-top: calc(100vh - 700px);
+	margin-bottom: 0;
+	.food {
+		height: 150px;
+		display: flex;
+		justify-content: space-between;
+		.pumpkin {
+			position: relative;
+			top: 55px;
+			left: 10px;
+		}
+		.wine {
+			position: relative;
+			top: 5px;
+			right: 55px;
+			height: 150px;
+		}
+	}
+	.shelf {
+		display: flex;
+		height: 100px;
+		justify-content: space-between;
+	}
+	img:first-of-type, img:last-of-type {
+		height: 100px;
+		flex-shrink: 0;
+	}
+	img.middle {
+		flex-grow: 1;
+		height: 55px;
 	}
 }

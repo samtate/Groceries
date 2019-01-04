@@ -15,7 +15,6 @@
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<a class="navbar-brand ml-md-5 mr-auto">Groceries</a>
-			<button class='btn btn-secondary mr-md-5'>Log In</button>
 		</nav>
 
 		<div class="container">
@@ -29,13 +28,35 @@
 					</div>
 				</div>
 			</form>
-			<div class="item-container">
+			<div class="item-container list-group">
 
 			</div>
-			<div class="checked-item-container">
+			<br />
+			<div class="divider">
+				<span>Ticked Items</span>
+				<button class="btn btn-primary remove-ticked">Remove Ticked Items</button>
+				<hr />
+			</div>
+			<div class="checked-item-container list-group">
 
 			</div>
+			<div class="no-items">
+				<p>Looks like you don't need anything!</p>
+			</div>
+
+			<footer class="col-12">
+				<div class="food">
+					<img src="/img/pumpkin.png" class="pumpkin" />
+					<img src="/img/wine.png" class="wine" />
+				</div>
+				<div class="shelf">
+					<img src="/img/shelf-left.png" />
+					<img src="/img/shelf-middle.png" class="middle" />
+					<img src="/img/shelf-right.png" />
+				</div>
+			</footer>
 		</div>
+
 
 		<script src="scripts/main.js"></script>
 	</body>

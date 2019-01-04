@@ -1,16 +1,18 @@
 const $ = el => document.querySelector(el);
 const $A = el => document.querySelectorAll(el);
-let highestID;
 const addInput = $('#add-input');
 const container = $('.container');
 const form = $('form');
 const itemContainer = $('.item-container');
 const checkedItemContainer = $('.checked-item-container');
+const divider = $('.divider');
+const removeTickedBtn = $('.remove-ticked');
+let highestID;
 
 // returns <div class="form-check">
 const FormCheck = function FormCheck() {
     const div = document.createElement('div');
-    div.classList.add('form-check');
+    div.classList.add('form-check','list-group-item');
 
     return div;
 }
@@ -39,6 +41,14 @@ const Label = function Label(p, id) {
     label.setAttribute('for', `checkbox-${id}`);
 
     return label;
+}
+
+const DeleteButton = function DeleteButton() {
+    const button = document.createElement('button');
+    button.classList.add('btn','btn-danger','delete-button');
+    button.innerHTML = 'X';
+
+    return button;
 }
 
 function addToContainer(el, itemID, container) {
@@ -75,10 +85,12 @@ function addItem(item) {
 
     const checkbox = new CheckBox(item.status, item.id);
     const label = new Label(item.value, item.id);
+    const deleteButton = new DeleteButton();
     const formCheck = new FormCheck();
 
     formCheck.appendChild(checkbox);
     formCheck.appendChild(label);
+    formCheck.appendChild(deleteButton);
 
     if (item.status === 'unchecked') {
         addToContainer(formCheck, item.id, itemContainer);
@@ -88,9 +100,22 @@ function addItem(item) {
     }
 }
 
+function showHideDivider() {
+    if (checkedItemContainer.childElementCount) {
+        divider.style.display = 'block';
+    }
+    else {
+        divider.style.display = 'none';
+    }
+}
+
 function checkItem(el) {
     itemContainer.removeChild(el);
 
+    el.classList.add('disabled');
+
+    //grabs ID of element to be checked
+    //it is of form "checkbox-X" so split[1] grabs just the X part
     let id = el.children[0].id.split('-')[1];
     addToContainer(el, id, checkedItemContainer);
 
@@ -98,10 +123,14 @@ function checkItem(el) {
     const item = localStorage.getObject(id);
     item.status = 'checked'
     localStorage.setObject(id, item);
+
+    showHideDivider();
 }
 
 function uncheckItem(el) {
     checkedItemContainer.removeChild(el);
+
+    el.classList.remove('disabled');
 
     let id = el.children[0].id.split('-')[1];
     addToContainer(el, id, itemContainer);
@@ -110,6 +139,25 @@ function uncheckItem(el) {
     const item = localStorage.getObject(id);
     item.status = 'unchecked'
     localStorage.setObject(id, item);
+
+    showHideDivider();
+}
+
+function deleteItem(el) {
+    el.parentElement.removeChild(el);
+
+    //grabs the ID of the element to be removed
+    //it is of form "checkbox-X" so split[1] grabs just the X part
+    localStorage.removeItem(el.children[0].id.split('-')[1]);
+
+    showHideDivider();
+}
+
+function removeTickedItems() {
+    while (checkedItemContainer.childElementCount) {
+        deleteItem(checkedItemContainer.children[0]);
+    }
+    showHideDivider();
 }
 
 function retrieveLocalStorage() {
@@ -127,6 +175,7 @@ function retrieveLocalStorage() {
     else {
         highestID = 0;
     }
+    showHideDivider();
 }
 
 form.addEventListener('submit', e => {
@@ -143,12 +192,21 @@ form.addEventListener('submit', e => {
     }
 }, false);
 
-document.addEventListener('click', (el) => {
-    if (el.target.matches('.form-check-input') && el.target.checked) {
-        checkItem(el.target.parentElement);
+document.addEventListener('click', e => {
+    if (e.target.matches('.form-check-input')) {
+        if (e.target.checked) {
+            checkItem(e.target.parentElement);
+        } else {
+            uncheckItem(e.target.parentElement);
+        }
     }
-    else if (el.target.matches('.form-check-input') && !el.target.checked) {
-        uncheckItem(el.target.parentElement);
+
+    else if (e.target.matches('.delete-button')) {
+        deleteItem(e.target.parentElement);
+    }
+
+    else if (e.target.matches('.remove-ticked')) {
+        removeTickedItems();
     }
 }, false);
 
