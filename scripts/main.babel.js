@@ -7,6 +7,8 @@ const itemContainer = $('.item-container');
 const checkedItemContainer = $('.checked-item-container');
 const divider = $('.divider');
 const removeTickedBtn = $('.remove-ticked');
+const noItems = $('.no-items');
+const footer = $('footer');
 let highestID;
 
 // returns <div class="form-check">
@@ -96,8 +98,11 @@ function addItem(item) {
         addToContainer(formCheck, item.id, itemContainer);
     }
     else if (item.status === 'checked') {
+        formCheck.classList.add('disabled');
         addToContainer(formCheck, item.id, checkedItemContainer);
     }
+
+    showHideSplash();
 }
 
 function showHideDivider() {
@@ -106,6 +111,19 @@ function showHideDivider() {
     }
     else {
         divider.style.display = 'none';
+    }
+}
+
+function showHideSplash() {
+    if (!checkedItemContainer.childElementCount
+        && !itemContainer.childElementCount)
+        {
+        noItems.style.display = 'block';
+        footer.style.display = 'block';
+        console.log('hi');
+    } else {
+        noItems.style.display = 'none';
+        footer.style.display = 'none';
     }
 }
 
@@ -125,6 +143,7 @@ function checkItem(el) {
     localStorage.setObject(id, item);
 
     showHideDivider();
+    showHideSplash();
 }
 
 function uncheckItem(el) {
@@ -141,6 +160,7 @@ function uncheckItem(el) {
     localStorage.setObject(id, item);
 
     showHideDivider();
+    showHideSplash();
 }
 
 function deleteItem(el) {
@@ -151,6 +171,7 @@ function deleteItem(el) {
     localStorage.removeItem(el.children[0].id.split('-')[1]);
 
     showHideDivider();
+    showHideSplash();
 }
 
 function removeTickedItems() {
@@ -158,6 +179,7 @@ function removeTickedItems() {
         deleteItem(checkedItemContainer.children[0]);
     }
     showHideDivider();
+    showHideSplash();
 }
 
 function retrieveLocalStorage() {
@@ -176,6 +198,7 @@ function retrieveLocalStorage() {
         highestID = 0;
     }
     showHideDivider();
+    showHideSplash();
 }
 
 form.addEventListener('submit', e => {

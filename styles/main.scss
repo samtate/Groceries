@@ -22,6 +22,9 @@ body {
 		border: none;
 	}
 }
+.checked-item-container label {
+	text-decoration: line-through;
+}
 .list-group {
 	padding-right: 0;
 }
@@ -71,7 +74,7 @@ hr {
 }
 footer {
 	height: 250px;
-	margin-top: calc(100vh - 700px);
+	margin-top: calc(100vh - 710px);
 	margin-bottom: 0;
 	.food {
 		height: 150px;
