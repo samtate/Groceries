@@ -1,0 +1,21 @@
+{
+  "short_name": "Groceries",
+  "name": "Groceries",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "img/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://groceries.sa.mtate.me.uk/index.html",
+  "background_color": "#4db6ac",
+  "theme_color": "#00857c",
+  "display": "standalone",
+  "orientation": "portrait"
+}

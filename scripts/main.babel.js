@@ -53,6 +53,11 @@ const DeleteButton = function DeleteButton() {
     return button;
 }
 
+function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+}
+
+
 function addToContainer(el, itemID, container) {
     let children = []
     for (let i = 0; i<container.childElementCount; i++) {
@@ -216,7 +221,9 @@ form.addEventListener('submit', e => {
 }, false);
 
 document.addEventListener('click', e => {
-    if (e.target.matches('.form-check-input')) {
+    const el = x => e.target.matches(x);
+
+    if (el('.form-check-input')) {
         if (e.target.checked) {
             checkItem(e.target.parentElement);
         } else {
@@ -224,13 +231,23 @@ document.addEventListener('click', e => {
         }
     }
 
-    else if (e.target.matches('.delete-button')) {
+    else if (el('.delete-button')) {
         deleteItem(e.target.parentElement);
     }
 
-    else if (e.target.matches('.remove-ticked')) {
+    else if (el('.remove-ticked')) {
         removeTickedItems();
     }
+
+    if (isMobileDevice()) {
+        if (document.activeElement.id === 'add-input') {
+            footer.style.display = 'none';
+        }
+        else {
+            footer.style.display = 'block';
+        }
+    }
+
 }, false);
 
 window.addEventListener('load', () => {
