@@ -33,6 +33,7 @@ const CheckBox = function CheckBox(status, id) {
     return input;
 }
 
+//returns <label class="form-check-label" id="label-*" for="checkbox-*">
 const Label = function Label(p, id) {
     const label = document.createElement('label');
     const textNode = document.createTextNode(p);
@@ -45,6 +46,7 @@ const Label = function Label(p, id) {
     return label;
 }
 
+//returns a deletebutton
 const DeleteButton = function DeleteButton() {
     const button = document.createElement('button');
     button.classList.add('btn','btn-danger','delete-button');
@@ -52,11 +54,6 @@ const DeleteButton = function DeleteButton() {
 
     return button;
 }
-
-function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-}
-
 
 function addToContainer(el, itemID, container) {
     let children = []
@@ -87,6 +84,7 @@ function addToContainer(el, itemID, container) {
     }
 }
 
+//generates a new list item based on the inputted text
 function addItem(item) {
     highestID += 1;
 
@@ -110,6 +108,7 @@ function addItem(item) {
     showHideSplash();
 }
 
+//shows divider only if both sections have content
 function showHideDivider() {
     if (checkedItemContainer.childElementCount) {
         divider.style.display = 'block';
@@ -119,19 +118,20 @@ function showHideDivider() {
     }
 }
 
+//checks if there is content and if so, hides the splash elements
 function showHideSplash() {
     if (!checkedItemContainer.childElementCount
         && !itemContainer.childElementCount)
         {
         noItems.style.display = 'block';
         footer.style.display = 'block';
-        console.log('hi');
     } else {
         noItems.style.display = 'none';
         footer.style.display = 'none';
     }
 }
 
+//ticks the seleced element
 function checkItem(el) {
     itemContainer.removeChild(el);
 
@@ -142,7 +142,6 @@ function checkItem(el) {
     let id = el.children[0].id.split('-')[1];
     addToContainer(el, id, checkedItemContainer);
 
-    const value = el.children[1].innerHTML;
     const item = localStorage.getObject(id);
     item.status = 'checked'
     localStorage.setObject(id, item);
@@ -151,6 +150,7 @@ function checkItem(el) {
     showHideSplash();
 }
 
+//unticks selected element
 function uncheckItem(el) {
     checkedItemContainer.removeChild(el);
 
@@ -159,7 +159,6 @@ function uncheckItem(el) {
     let id = el.children[0].id.split('-')[1];
     addToContainer(el, id, itemContainer);
 
-    const value = el.children[1].innerHTML;
     const item = localStorage.getObject(id);
     item.status = 'unchecked'
     localStorage.setObject(id, item);
@@ -171,7 +170,7 @@ function uncheckItem(el) {
 function deleteItem(el) {
     el.parentElement.removeChild(el);
 
-    //grabs the ID of the element to be removed
+    //grabs the ID of the element to be removed from localStorage
     //it is of form "checkbox-X" so split[1] grabs just the X part
     localStorage.removeItem(el.children[0].id.split('-')[1]);
 
@@ -187,6 +186,7 @@ function removeTickedItems() {
     showHideSplash();
 }
 
+//loops through localStorage items and adds them to appropriate container
 function retrieveLocalStorage() {
     if (localStorage.length) {
         let ids = [];
@@ -219,6 +219,11 @@ form.addEventListener('submit', e => {
         addInput.value = ''; //clear box
     }
 }, false);
+
+
+function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+}
 
 document.addEventListener('click', e => {
     const el = x => e.target.matches(x);
