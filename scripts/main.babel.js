@@ -13,7 +13,7 @@ let highestID;
 // returns <div class="form-check">
 const FormCheck = function FormCheck() {
     const div = document.createElement('div');
-    div.classList.add('form-check','list-group-item');
+    div.classList.add('form-check', 'list-group-item');
 
     return div;
 }
@@ -48,7 +48,7 @@ const Label = function Label(p, id) {
 //returns a deletebutton
 const DeleteButton = function DeleteButton() {
     const button = document.createElement('button');
-    button.classList.add('btn','btn-danger','delete-button');
+    button.classList.add('btn', 'btn-danger', 'delete-button');
     button.innerHTML = 'X';
 
     return button;
@@ -56,7 +56,7 @@ const DeleteButton = function DeleteButton() {
 
 function addToContainer(el, itemID, container) {
     let children = []
-    for (let i = 0; i<container.childElementCount; i++) {
+    for (let i = 0; i < container.childElementCount; i++) {
         //adds the id of each existing checkbox to an array for comparing later
         /*
         <div class="form-check">
@@ -98,8 +98,7 @@ function addItem(item) {
 
     if (item.status === 'unchecked') {
         addToContainer(formCheck, item.id, itemContainer);
-    }
-    else if (item.status === 'checked') {
+    } else if (item.status === 'checked') {
         formCheck.classList.add('disabled');
         addToContainer(formCheck, item.id, checkedItemContainer);
     }
@@ -111,17 +110,15 @@ function addItem(item) {
 function showHideDivider() {
     if (checkedItemContainer.childElementCount) {
         divider.style.display = 'block';
-    }
-    else {
+    } else {
         divider.style.display = 'none';
     }
 }
 
 //checks if there is content and if so, hides the splash elements
 function showHideSplash() {
-    if (!checkedItemContainer.childElementCount
-        && !itemContainer.childElementCount)
-        {
+    if (!checkedItemContainer.childElementCount &&
+        !itemContainer.childElementCount) {
         noItems.style.display = 'block';
     } else {
         noItems.style.display = 'none';
@@ -187,16 +184,15 @@ function removeTickedItems() {
 function retrieveLocalStorage() {
     if (localStorage.length) {
         let ids = [];
-            for (let i = 0; i < localStorage.length; i++){
-                const item = localStorage.getObject(localStorage.key(i));
-                addItem(item);
-                ids.push(item.id);
-            }
+        for (let i = 0; i < localStorage.length; i++) {
+            const item = localStorage.getObject(localStorage.key(i));
+            addItem(item);
+            ids.push(item.id);
+        }
 
         //gets highest ID from local storage
-        highestID = ids.sort()[ids.length-1] + 1;
-    }
-    else {
+        highestID = ids.sort()[ids.length - 1] + 1;
+    } else {
         highestID = 0;
     }
     showHideDivider();
@@ -229,13 +225,9 @@ document.addEventListener('click', e => {
         } else {
             uncheckItem(e.target.parentElement);
         }
-    }
-
-    else if (el('.delete-button')) {
+    } else if (el('.delete-button')) {
         deleteItem(e.target.parentElement);
-    }
-
-    else if (el('.remove-ticked')) {
+    } else if (el('.remove-ticked')) {
         removeTickedItems();
     }
 
@@ -248,10 +240,10 @@ window.addEventListener('load', () => {
 
 //add methods to local storage in order to be able to store and retrieve objects
 Storage.prototype.setObject = function(key, value) {
-  this.setItem(key, JSON.stringify(value));
+    this.setItem(key, JSON.stringify(value));
 }
 
 Storage.prototype.getObject = function(key) {
-  var value = this.getItem(key);
-  return value && JSON.parse(value);
+    var value = this.getItem(key);
+    return value && JSON.parse(value);
 }
