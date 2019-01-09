@@ -8,7 +8,6 @@ const checkedItemContainer = $('.checked-item-container');
 const divider = $('.divider');
 const removeTickedBtn = $('.remove-ticked');
 const noItems = $('.no-items');
-const footer = $('footer');
 let highestID;
 
 // returns <div class="form-check">
@@ -124,10 +123,8 @@ function showHideSplash() {
         && !itemContainer.childElementCount)
         {
         noItems.style.display = 'block';
-        footer.style.display = 'block';
     } else {
         noItems.style.display = 'none';
-        footer.style.display = 'none';
     }
 }
 
@@ -221,9 +218,7 @@ form.addEventListener('submit', e => {
 }, false);
 
 
-function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-}
+const isMobileDevice = (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 
 document.addEventListener('click', e => {
     const el = x => e.target.matches(x);
@@ -244,14 +239,6 @@ document.addEventListener('click', e => {
         removeTickedItems();
     }
 
-    if (isMobileDevice()) {
-        if (document.activeElement.id === 'add-input') {
-            footer.style.display = 'none';
-        }
-        else {
-            footer.style.display = 'block';
-        }
-    }
 
 }, false);
 
